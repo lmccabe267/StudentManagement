@@ -2,6 +2,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import Panels.*;
+
 @SuppressWarnings("serial")
 public class Window extends JFrame{
 	
@@ -14,5 +16,12 @@ public class Window extends JFrame{
 		setResizable(false);
 		setTitle("MANAGER");
 		setVisible(true);
+		initLogin();
 	}
+	
+	void initLogin() {
+		new Login();
+	}
+	
+	
 }
