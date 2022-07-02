@@ -9,7 +9,6 @@ import java.sql.*;
  * 6.process the results ->
  * 7.close
  * 
- * DDL: 
  * DML: executeUpdate()
  * DQL: executeQuery()
  */
