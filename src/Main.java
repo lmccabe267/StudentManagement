@@ -1,16 +1,14 @@
 
-/*
- * 1.import
- * 2.load and register driver
- * 3.create connection
- * 4.create a statement
- * 5.execute the query
- * 6.process the results
- * 7.close
- */
-
 public class Main {
-	public static void main(String[]args) {
+	
+	public static void main(String[]args) throws Exception{
+		DBManager dbm = new DBManager("jdbc:mysql://localhost:3306/school", "root", args[0]);
+		
+		dbm.printResultSet(dbm.query("SELECT * FROM students"));
+		
+		dbm.stopConnection();
 		
 	}
+	
+	
 }
