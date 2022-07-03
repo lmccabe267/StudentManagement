@@ -1,3 +1,4 @@
+package Managers;
 import java.sql.*;
 
 /*
@@ -32,11 +33,11 @@ public class DBManager {
 	}
 	
 	
-	void stopConnection() throws Exception{
+	public void stopConnection() throws Exception{
 			con.close();
 	}
 	
-	ResultSet query(String query) throws Exception{
+	public ResultSet query(String query) throws Exception{
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		return rs;
@@ -48,7 +49,7 @@ public class DBManager {
 		return count;
 	}
 	
-	void printResultSet(ResultSet rs) throws Exception {
+	public void printResultSet(ResultSet rs) throws Exception {
 		
 		String data = "";
 		
