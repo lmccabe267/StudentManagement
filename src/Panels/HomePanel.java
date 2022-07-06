@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,7 +35,10 @@ public class HomePanel extends JPanel {
 			studentJList = new JList<Student>(model);
 			studentListScroll = new JScrollPane(studentJList);
 			
-			add(studentListScroll);
+			JLabel title = new JLabel("STUDENTS");
+			
+			add(title, BorderLayout.NORTH);			
+			add(studentListScroll, BorderLayout.CENTER);
 			setVisible(true);
 		}catch(Exception e) {
 			System.out.println("Error populating studentList");

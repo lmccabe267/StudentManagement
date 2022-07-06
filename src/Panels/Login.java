@@ -19,7 +19,6 @@ public class Login extends JPanel{
 	private boolean loggedIn = false;
 	
 	public Login() {
-		
 		setLayout(new FlowLayout());
 		JLabel prompt = new JLabel("Enter Password:");
 		JTextField entry = new JTextField(35);
