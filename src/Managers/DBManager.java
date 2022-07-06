@@ -34,18 +34,26 @@ public class DBManager {
 		initConnection();
 	}
 	
+	
+	//connects to the SQL database
 	void initConnection() throws Exception{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, username, password);
 			System.out.println("CONNECTION SUCCESSFUL");
 	}
 	
-	
+	//stops connection to SQL database
 	public void stopConnection() throws Exception{
 			System.out.println("CONNECTED TERMINATED");
 			con.close();
 	}
 	
+	
+	/*
+	 * sends a query to the SQL database
+	 * @param query a string to be sent as a query to the database
+	 * @return rs a result set received from the database as a result of the sent query
+	 */
 	public ResultSet query(String query) throws Exception{
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
@@ -58,6 +66,10 @@ public class DBManager {
 		return count;
 	}
 	
+	/*
+	 * prints all content in the dataset
+	 * @param rs ResultSet to be printed
+	 */
 	public void printResultSet(ResultSet rs) throws Exception {
 		
 		String data = "";
@@ -69,6 +81,11 @@ public class DBManager {
 		rs.close();
 	}
 	
+	/*
+	 * returns a list of student objects created from the ResultSet received from the query
+	 * @param query query to be sent to the database
+	 * @return studentList a list of student objects received from the databse
+	 */
 	public List<Student> queryStudent(String query) throws Exception {
 		List<Student> studentList = new ArrayList<Student>();
 		ResultSet queryResult = query(query);

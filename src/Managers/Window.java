@@ -30,6 +30,9 @@ public class Window extends JFrame{
 		getContentPane().revalidate();
 	}
 	
+	
+	
+	//displays login page and verifies login, if override is true, page is not displayed and user is logged in
 	void initLogin(boolean override) throws InterruptedException {
 		Login login = new Login();
 		add(login);
