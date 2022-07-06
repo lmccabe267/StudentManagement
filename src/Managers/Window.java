@@ -2,9 +2,8 @@ package Managers;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import Panels.Login;
+import Panels.*;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame{
@@ -26,7 +25,7 @@ public class Window extends JFrame{
 		
 		getContentPane().removeAll();
 		getContentPane().invalidate();
-		getContentPane().add(new JPanel());
+		getContentPane().add(new HomePanel(dbm));
 		getContentPane().revalidate();
 	}
 	

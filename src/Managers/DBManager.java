@@ -1,5 +1,12 @@
 package Managers;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import People.Student;
 
 /*
  * 1.import --> java.sql
@@ -30,10 +37,12 @@ public class DBManager {
 	void initConnection() throws Exception{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, username, password);
+			System.out.println("CONNECTION SUCCESSFUL");
 	}
 	
 	
 	public void stopConnection() throws Exception{
+			System.out.println("CONNECTED TERMINATED");
 			con.close();
 	}
 	
@@ -58,5 +67,15 @@ public class DBManager {
 			System.out.println(data);
 		}
 		rs.close();
+	}
+	
+	public List<Student> queryStudent(String query) throws Exception {
+		List<Student> studentList = new ArrayList<Student>();
+		ResultSet queryResult = query(query);
+		while(queryResult.next()) {
+		 	studentList.add(new Student(queryResult));
+		}
+		queryResult.close();
+		return studentList;
 	}
 }
