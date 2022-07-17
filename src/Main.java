@@ -14,11 +14,6 @@ public class Main {
 		}else {
 			new SystemManager(null, login_override);
 		}
-		
-		
-		
-		
-		
 	}
 	
 	
