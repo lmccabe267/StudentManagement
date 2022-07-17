@@ -1,0 +1,53 @@
+package Panels;
+
+import java.awt.BorderLayout;
+import java.util.List;
+import java.util.Objects;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import Managers.DBManager;
+import People.Student;
+
+@SuppressWarnings("serial")
+public class StudentListPanel extends JPanel{
+
+	DBManager dbm;
+	JScrollPane studentListScroll;
+	List<Student> studentList;
+	JList<Student> studentJList;
+	DefaultListModel<Student> model;
+	
+	public StudentListPanel(DBManager dbm) {
+		this.dbm = dbm;
+		setLayout(new BorderLayout());
+		
+		
+		model = new DefaultListModel<Student>();
+		try {
+			studentList = dbm.queryStudent("SELECT * FROM students");
+			for(Student student: studentList) {
+				model.addElement(student);
+			}
+			studentJList = new JList<Student>(model);
+			studentListScroll = new JScrollPane(studentJList);
+			
+			JLabel title = new JLabel("STUDENTS");
+			
+			add(title, BorderLayout.NORTH);			
+			add(studentListScroll, BorderLayout.CENTER);
+			setVisible(true);
+		}catch(Exception e) {
+			System.out.println("Error populating studentList");
+			if(Objects.isNull(dbm)) {
+				System.out.println("DATABASE IS OFFLINE");
+			}
+			e.printStackTrace();
+		}
+		
+	}
+}
