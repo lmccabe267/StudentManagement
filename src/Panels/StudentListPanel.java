@@ -1,14 +1,15 @@
 package Panels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import Managers.DBManager;
 import People.Student;
@@ -18,23 +19,18 @@ public class StudentListPanel extends JPanel{
 
 	DBManager dbm;
 	JScrollPane studentListScroll;
-	List<Student> studentList;
-	JList<Student> studentJList;
-	DefaultListModel<Student> model;
+	JTable studentTable;
 	
 	public StudentListPanel(DBManager dbm) {
 		this.dbm = dbm;
 		setLayout(new BorderLayout());
 		
-		
-		model = new DefaultListModel<Student>();
 		try {
-			studentList = dbm.queryStudent("SELECT * FROM students");
-			for(Student student: studentList) {
-				model.addElement(student);
-			}
-			studentJList = new JList<Student>(model);
-			studentListScroll = new JScrollPane(studentJList);
+			studentTable = createTable(dbm.queryStudent("SELECT * FROM students"), dbm.getColumnHeaders(dbm.query("SELECT * FROM students")));
+			studentTable.setGridColor(Color.black);
+			studentTable.setShowGrid(true);
+			studentTable.setShowVerticalLines(true);
+			studentListScroll = new JScrollPane(studentTable);
 			
 			JLabel title = new JLabel("STUDENTS");
 			
@@ -48,6 +44,28 @@ public class StudentListPanel extends JPanel{
 			}
 			e.printStackTrace();
 		}
+		
+	}
+	
+	
+	private JTable createTable(List<Student> studentList, List<String> headers) {
+		String columns[] = new String[headers.size()];
+		for(int i = 0; i < columns.length; ++i) {
+			columns[i] = headers.get(i);
+		}
+		String data[][] = new String[studentList.size()][headers.size()];
+		
+		int i = 0;
+		for(Student student: studentList) {
+			data[i][0] = student.getID() + "";
+			data[i][1] = student.getName();
+			++i;
+		}
+		
+		DefaultTableModel model = new DefaultTableModel(data, columns);
+		System.out.println("table generated");
+		return new JTable(model);
+		
 		
 	}
 }

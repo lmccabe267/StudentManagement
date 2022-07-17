@@ -17,4 +17,12 @@ public class Student {
 	public String toString() {
 		return(STUDENT_ID + " " + STUDENT_NAME);
 	}
+	
+	public int getID() {
+		return STUDENT_ID;
+	}
+	
+	public String getName() {
+		return STUDENT_NAME;
+	}
 }
