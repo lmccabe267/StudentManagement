@@ -73,6 +73,16 @@ public class StudentListPanel extends JPanel{
 		};
 	}
 	
+	public void updateTable() {
+		try {
+			studentTable = createTable(dbm.queryStudent("SELECT * FROM students"), dbm.getColumnHeaders(dbm.query("SELECT * FROM students")));
+		} catch (Exception e) {
+			System.out.println("ERROR UPDATING TABLE");
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 }

@@ -15,6 +15,12 @@ public class Student {
 		STUDENT_GRADE = rs.getInt(3);
 	}
 	
+	public Student(int id, String name, int grade) {
+		this.STUDENT_ID = id;
+		this.STUDENT_NAME = name;
+		this.STUDENT_GRADE = grade;
+	}
+	
 	
 	public String toString() {
 		return(STUDENT_ID + " " + STUDENT_NAME + " " + STUDENT_GRADE);

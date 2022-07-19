@@ -6,11 +6,11 @@ import javax.swing.JFrame;
 import Panels.*;
 
 @SuppressWarnings("serial")
-public class Window extends JFrame{
+public class WindowManager extends JFrame{
 	
 	DBManager dbm;
 	
-	public Window(DBManager dbm, boolean override) {
+	public WindowManager(DBManager dbm, boolean override) {
 		this.dbm = dbm;
 		setSize(new Dimension(1000, 750));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,7 +26,7 @@ public class Window extends JFrame{
 		
 		getContentPane().removeAll();
 		getContentPane().invalidate();
-		getContentPane().add(new HomePanel(dbm));
+		getContentPane().add(new HomePanel(dbm, this));
 		getContentPane().revalidate();
 	}
 	
