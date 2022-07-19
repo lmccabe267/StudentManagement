@@ -14,19 +14,21 @@ public class HomePanel extends JPanel {
 	public HomePanel(DBManager dbm) {
 		
 		setLayout(new BorderLayout());
+		StudentListPanel studentListPanel = new StudentListPanel(dbm);
 		
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu("File");
 		JMenuItem newStudent = new JMenuItem("new");
 		JMenuItem delete = new JMenuItem("delete");
 		JMenuItem logout = new JMenuItem("logout");
-
+		
+		
 		file.add(newStudent);
 		file.add(delete);
 		file.add(logout);
 		menuBar.add(file);
 
-		StudentListPanel studentListPanel = new StudentListPanel(dbm);
+		
 
 		add(menuBar, BorderLayout.NORTH);
 		add(studentListPanel, BorderLayout.CENTER);

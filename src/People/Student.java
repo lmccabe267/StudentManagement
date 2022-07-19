@@ -7,15 +7,17 @@ public class Student {
 	
 	int STUDENT_ID;
 	String STUDENT_NAME;
+	int STUDENT_GRADE;
 	
 	public Student(ResultSet rs) throws SQLException {
 		STUDENT_ID = rs.getInt(1);
 		STUDENT_NAME = rs.getString(2);
+		STUDENT_GRADE = rs.getInt(3);
 	}
 	
 	
 	public String toString() {
-		return(STUDENT_ID + " " + STUDENT_NAME);
+		return(STUDENT_ID + " " + STUDENT_NAME + " " + STUDENT_GRADE);
 	}
 	
 	public int getID() {
@@ -24,5 +26,9 @@ public class Student {
 	
 	public String getName() {
 		return STUDENT_NAME;
+	}
+	
+	public int getGrade() {
+		return STUDENT_GRADE;
 	}
 }

@@ -20,6 +20,7 @@ public class StudentListPanel extends JPanel{
 	DBManager dbm;
 	JScrollPane studentListScroll;
 	JTable studentTable;
+	int defaultWidth;
 	
 	public StudentListPanel(DBManager dbm) {
 		this.dbm = dbm;
@@ -59,13 +60,19 @@ public class StudentListPanel extends JPanel{
 		for(Student student: studentList) {
 			data[i][0] = student.getID() + "";
 			data[i][1] = student.getName();
+			data[i][2] = student.getGrade() + "";
 			++i;
 		}
 		
 		DefaultTableModel model = new DefaultTableModel(data, columns);
 		System.out.println("table generated");
-		return new JTable(model);
-		
-		
+		return new JTable(model) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+		};
 	}
+	
+	
+	
 }
