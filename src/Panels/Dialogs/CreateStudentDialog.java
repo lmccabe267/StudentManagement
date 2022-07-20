@@ -1,6 +1,8 @@
 package Panels.Dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -43,9 +45,28 @@ public class CreateStudentDialog {
 			JLabel lastNameLabel = new JLabel("Student Last Name:");
 			JTextField lastNameEntry = new JTextField(35);
 			JLabel gradeLabel = new JLabel("Student Grade:");
-			String grades[] = {"k", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-			JComboBox<String> gradeEntry = new JComboBox<String>(grades);
+			Integer grades[] = {0,1,2,3,4,5,6,7,8,9,10,11,12}; 
+			JComboBox<Integer> gradeEntry = new JComboBox<Integer>(grades);
 			JButton submit = new JButton("Submit");
+			submit.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(!firstNameEntry.getText().equals("") && !lastNameEntry.getText().equals("") && !idEntry.getText().equals("")) {
+						int grade = grades[gradeEntry.getSelectedIndex()];
+						try {
+							student = new Student(Integer.parseInt(idEntry.getText()), firstNameEntry.getText(), lastNameEntry.getText(), grade);
+							dialog.dispose();
+						}catch(Exception ex) {
+							ex.printStackTrace();
+							System.out.println("ERROR CREATING STUDENT");
+						}
+					}
+					
+				}
+				
+			});
+			
 			
 			panel.add(idLabel);
 			panel.add(idEntry);

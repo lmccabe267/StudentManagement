@@ -1,9 +1,13 @@
 package Managers;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-import Panels.*;
+import Panels.HomePanel;
+import Panels.Login;
 
 @SuppressWarnings("serial")
 public class WindowManager extends JFrame{
@@ -17,7 +21,16 @@ public class WindowManager extends JFrame{
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setTitle("MANAGER");
-		
+		this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+            	try {
+					dbm.stopConnection();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+                System.exit(0);
+            }
+        });
 		try {
 			initLogin(override);			
 		}catch(Exception e) {

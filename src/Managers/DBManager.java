@@ -109,4 +109,13 @@ public class DBManager {
 		return headers;
 		
 	}
+	
+	public int createStudent(Student student){
+		try {
+			return update("INSERT INTO students VALUES (" + student.getID() + ", '" + student.getFirstName() + "', '" + student.getLastName() + "', " + student.getGrade() + ");");
+		} catch (Exception e) {
+			System.out.println("ERROR IN createStudent method");
+		}
+		return 0;
+	}
 }

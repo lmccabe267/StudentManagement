@@ -59,8 +59,9 @@ public class StudentListPanel extends JPanel{
 		int i = 0;
 		for(Student student: studentList) {
 			data[i][0] = student.getID() + "";
-			data[i][1] = student.getName();
-			data[i][2] = student.getGrade() + "";
+			data[i][1] = student.getFirstName();
+			data[i][2] = student.getLastName();
+			data[i][3] = student.getGrade() + "";
 			++i;
 		}
 		
@@ -76,11 +77,19 @@ public class StudentListPanel extends JPanel{
 	public void updateTable() {
 		try {
 			studentTable = createTable(dbm.queryStudent("SELECT * FROM students"), dbm.getColumnHeaders(dbm.query("SELECT * FROM students")));
+			redrawTable(studentTable);
 		} catch (Exception e) {
 			System.out.println("ERROR UPDATING TABLE");
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void redrawTable(JTable table) {
+		studentListScroll.setViewportView(table);
+		studentTable.setGridColor(Color.black);
+		studentTable.setShowGrid(true);
+		studentTable.setShowVerticalLines(true);
 	}
 	
 	

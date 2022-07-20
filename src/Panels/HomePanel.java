@@ -16,9 +16,11 @@ import Panels.Dialogs.CreateStudentDialog;
 public class HomePanel extends JPanel {
 	
 	JFrame parent;
-	
+	DBManager dbm;
 	public HomePanel(DBManager dbm, JFrame parent) {
 		this.parent = parent;
+		this.dbm = dbm;
+		
 		setLayout(new BorderLayout());
 		StudentListPanel studentListPanel = new StudentListPanel(dbm);
 		
@@ -29,8 +31,12 @@ public class HomePanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(CreateStudentDialog.showDialog(parent));
-				
+				try {
+					dbm.createStudent(CreateStudentDialog.showDialog(parent));
+					studentListPanel.updateTable();
+				} catch (Exception e1) {
+					System.out.println("ERROR CREATING STUDENT in HomePanel");
+				}
 			}
 			
 		});
