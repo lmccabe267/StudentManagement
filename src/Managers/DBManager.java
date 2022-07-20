@@ -2,6 +2,7 @@ package Managers;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,5 +95,27 @@ public class DBManager {
 		}
 		queryResult.close();
 		return studentList;
+	}
+	
+	public List<String> getColumnHeaders(ResultSet rs) throws Exception{
+		ResultSetMetaData rsmd = rs.getMetaData();
+		List<String> headers = new ArrayList<String>();
+		int columnCount = rsmd.getColumnCount();
+		
+		for(int i = 1; i <= columnCount; ++i) {
+			headers.add(rsmd.getColumnName(i));
+		}
+		
+		return headers;
+		
+	}
+	
+	public int createStudent(Student student){
+		try {
+			return update("INSERT INTO students VALUES (" + student.getID() + ", '" + student.getFirstName() + "', '" + student.getLastName() + "', " + student.getGrade() + ");");
+		} catch (Exception e) {
+			System.out.println("ERROR IN createStudent method");
+		}
+		return 0;
 	}
 }

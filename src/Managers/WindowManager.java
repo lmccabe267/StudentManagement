@@ -1,23 +1,36 @@
 package Managers;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-import Panels.*;
+import Panels.HomePanel;
+import Panels.Login;
 
 @SuppressWarnings("serial")
-public class Window extends JFrame{
+public class WindowManager extends JFrame{
 	
 	DBManager dbm;
 	
-	public Window(DBManager dbm, boolean override) {
+	public WindowManager(DBManager dbm, boolean override) {
 		this.dbm = dbm;
 		setSize(new Dimension(1000, 750));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setTitle("MANAGER");
-		
+		this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+            	try {
+					dbm.stopConnection();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+                System.exit(0);
+            }
+        });
 		try {
 			initLogin(override);			
 		}catch(Exception e) {
@@ -26,7 +39,7 @@ public class Window extends JFrame{
 		
 		getContentPane().removeAll();
 		getContentPane().invalidate();
-		getContentPane().add(new HomePanel(dbm));
+		getContentPane().add(new HomePanel(dbm, this));
 		getContentPane().revalidate();
 	}
 	
