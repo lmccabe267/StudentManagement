@@ -36,6 +36,13 @@ public class DBManager {
 	}
 	
 	
+	
+	/*
+	 * Starts connection between the client and the mysql server
+	 * Uses the variables that are defined within the constructor to begin connection
+	 * 
+	 *
+	 */
 	//connects to the SQL database
 	void initConnection() throws Exception{
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -61,6 +68,11 @@ public class DBManager {
 		return rs;
 	}
 	
+	/*
+	 * sends an update statement to the mysql server in order to modify the database
+	 * @param String update: sql query to be executed
+	 * @returns int count: number of lines that were changed in the database
+	 */
 	int update(String update) throws Exception{
 		Statement st = con.createStatement();
 		int count = st.executeUpdate(update);
@@ -97,6 +109,12 @@ public class DBManager {
 		return studentList;
 	}
 	
+	
+	/*
+	 * Method to get a list of column headers for a table based on a result set
+	 * @param ResultSet rs: result set to have headers extracted from
+	 * @returns List<String> a list of the column headers found in the result set
+	 */
 	public List<String> getColumnHeaders(ResultSet rs) throws Exception{
 		ResultSetMetaData rsmd = rs.getMetaData();
 		List<String> headers = new ArrayList<String>();
@@ -110,12 +128,17 @@ public class DBManager {
 		
 	}
 	
+	/*
+	 * Adds the student information to the database using a Student Object
+	 * @param Student student: student object to be added to the database
+	 * @returns int count: the amount of lines changed in the database, -1 if failed
+	 */
 	public int createStudent(Student student){
 		try {
 			return update("INSERT INTO students VALUES (" + student.getID() + ", '" + student.getFirstName() + "', '" + student.getLastName() + "', " + student.getGrade() + ");");
 		} catch (Exception e) {
 			System.out.println("ERROR IN createStudent method");
 		}
-		return 0;
+		return -1;
 	}
 }
