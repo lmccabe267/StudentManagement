@@ -17,12 +17,15 @@ public class HomePanel extends JPanel {
 	
 	JFrame parent;
 	DBManager dbm;
-	public HomePanel(DBManager dbm, JFrame parent) {
+	StudentInfoPanel infoPanel;
+	
+	public HomePanel(DBManager dbm, JFrame parent, StudentInfoPanel infoPanel) {
 		this.parent = parent;
 		this.dbm = dbm;
+		this.infoPanel = infoPanel;
 		
 		setLayout(new BorderLayout());
-		StudentListPanel studentListPanel = new StudentListPanel(dbm);
+		StudentListPanel studentListPanel = new StudentListPanel(dbm, infoPanel);
 		
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu("File");
@@ -43,6 +46,7 @@ public class HomePanel extends JPanel {
 		JMenuItem delete = new JMenuItem("delete");
 		JMenuItem logout = new JMenuItem("logout");
 		
+		StudentInfoPanel infoPane = infoPanel;
 		
 		file.add(newStudent);
 		file.add(delete);
@@ -53,6 +57,7 @@ public class HomePanel extends JPanel {
 
 		add(menuBar, BorderLayout.NORTH);
 		add(studentListPanel, BorderLayout.CENTER);
+		add(infoPane, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 }

@@ -17,7 +17,6 @@ import People.Student;
 
 public class CreateStudentDialog {
 	static JDialog dialog;
-	static int size;
 	static String name;
 	static Student student;
 	
