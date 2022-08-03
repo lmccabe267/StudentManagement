@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import Managers.DBManager;
@@ -18,12 +20,15 @@ import People.Student;
 public class StudentListPanel extends JPanel{
 
 	DBManager dbm;
+	StudentInfoPanel infoPanel;
 	JScrollPane studentListScroll;
 	JTable studentTable;
 	int defaultWidth;
 	
-	public StudentListPanel(DBManager dbm) {
+	public StudentListPanel(DBManager dbm, StudentInfoPanel infoPanel) {
 		this.dbm = dbm;
+		this.infoPanel = infoPanel;
+		
 		setLayout(new BorderLayout());
 		
 		try {
@@ -67,11 +72,26 @@ public class StudentListPanel extends JPanel{
 		
 		DefaultTableModel model = new DefaultTableModel(data, columns);
 		System.out.println("table generated");
-		return new JTable(model) {
+		JTable table = new JTable(model) {
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			};
 		};
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    @Override
+		    public void valueChanged(ListSelectionEvent event) {
+		        if (table.getSelectedRow() > -1) {
+		            // print first column value from selected row
+		           // System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+		            try {
+						infoPanel.updateSelected(dbm.queryStudent("SELECT * FROM students WHERE student_id=" + table.getValueAt(table.getSelectedRow(), 0) + ";").get(0));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		        }
+		    }
+		});
+		return table;
 	}
 	
 	public void updateTable() {

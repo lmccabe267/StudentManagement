@@ -4,10 +4,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import Panels.HomePanel;
 import Panels.Login;
+import Panels.StudentInfoPanel;
 
 @SuppressWarnings("serial")
 public class WindowManager extends JFrame{
@@ -39,7 +39,7 @@ public class WindowManager extends JFrame{
 		
 		getContentPane().removeAll();
 		getContentPane().invalidate();
-		getContentPane().add(new HomePanel(dbm, this));
+		getContentPane().add(new HomePanel(dbm, this, new StudentInfoPanel(dbm)));
 		getContentPane().revalidate();
 	}
 	
