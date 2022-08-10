@@ -141,4 +141,19 @@ public class DBManager {
 		}
 		return -1;
 	}
+	
+	/*
+	 * Deletes the from the database corresponding to the student object passed in
+	 * @param Student student the student to be deleted
+	 * @returns the amount of lines changed in the database, -1 if failed
+	 */
+	public int deleteStudent(Student student) {
+		try {
+			return update("DELETE FROM students WHERE student_id=" + student.getID());
+		} catch (Exception e) {
+			System.out.println("Error deleting student");
+		}
+		
+		return -1;
+	}
 }

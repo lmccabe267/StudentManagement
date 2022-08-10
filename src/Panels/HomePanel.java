@@ -54,7 +54,8 @@ public class HomePanel extends JPanel {
 		menuBar.add(file);
 
 		
-
+		infoPanel.add(studentListPanel);
+		
 		add(menuBar, BorderLayout.NORTH);
 		add(studentListPanel, BorderLayout.CENTER);
 		add(infoPane, BorderLayout.SOUTH);

@@ -2,6 +2,8 @@ package Panels;
 
 import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,12 +17,14 @@ import People.Student;
 public class StudentInfoPanel extends JPanel{
 	
 	DBManager dbm;
+	StudentListPanel studentListPanel;
 	JLabel firstNameLabel, lastNameLabel, idLabel;
 	JTextField firstName, lastName, id;
 	JButton edit, delete;
 	
 	public StudentInfoPanel(DBManager dbm) {
 		this.dbm = dbm;
+		
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setLayout(new GridLayout(4,2));
 		
@@ -38,6 +42,15 @@ public class StudentInfoPanel extends JPanel{
 		lastName.setEditable(false);
 		id = new JTextField(35);
 		id.setEditable(false);
+		
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteSelected(studentListPanel.getSelected());
+			}
+			
+		});
 		
 		add(idLabel);
 		add(id);
@@ -67,6 +80,21 @@ public class StudentInfoPanel extends JPanel{
 		}
 	}
 	
+	public int deleteSelected(Student student) {
+		try {
+			System.out.println(student.getFirstName());
+			dbm.deleteStudent(student);
+			studentListPanel.updateTable();
+			return 1;
+		}catch(Exception e) {
+			System.out.println("Error deleting student: " + student.getID());
+		}
+		return -1;
+	}
+	
+	public void add(StudentListPanel slp) {
+		this.studentListPanel = slp;
+	}
 	
 	
 }

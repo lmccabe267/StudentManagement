@@ -111,6 +111,14 @@ public class StudentListPanel extends JPanel{
 		studentTable.setShowVerticalLines(true);
 	}
 	
-	
+	public Student getSelected() {
+		try {
+			return dbm.queryStudent("SELECT * FROM students WHERE student_id="+studentTable.getValueAt(studentTable.getSelectedRow(), 0)).get(0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }
