@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Managers.DBManager;
@@ -44,6 +45,19 @@ public class HomePanel extends JPanel {
 			
 		});
 		JMenuItem delete = new JMenuItem("delete");
+
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int confirm = JOptionPane.showConfirmDialog(studentListPanel, "Delete selected student?", "Are you sure?",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if(confirm == JOptionPane.YES_OPTION) {					
+					infoPanel.deleteSelected(studentListPanel.getSelected());
+				}
+			}
+		});
+		
 		JMenuItem logout = new JMenuItem("logout");
 		
 		StudentInfoPanel infoPane = infoPanel;

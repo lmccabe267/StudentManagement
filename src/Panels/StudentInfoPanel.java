@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -47,7 +48,12 @@ public class StudentInfoPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				deleteSelected(studentListPanel.getSelected());
+				int confirm = JOptionPane.showConfirmDialog(studentListPanel, "Delete selected student?", "Are you sure?",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if(confirm == JOptionPane.YES_OPTION) {					
+					deleteSelected(studentListPanel.getSelected());
+				}
 			}
 			
 		});
@@ -95,6 +101,5 @@ public class StudentInfoPanel extends JPanel{
 	public void add(StudentListPanel slp) {
 		this.studentListPanel = slp;
 	}
-	
 	
 }
