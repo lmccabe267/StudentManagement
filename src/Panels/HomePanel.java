@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import Managers.DBManager;
 import Panels.Dialogs.CreateStudentDialog;
+import People.Student;
 
 @SuppressWarnings("serial")
 public class HomePanel extends JPanel {
@@ -36,7 +37,13 @@ public class HomePanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					dbm.createStudent(CreateStudentDialog.showDialog(parent));
+					Student temp = CreateStudentDialog.showDialog(parent);
+					if(dbm.queryStudent("SELECT * from students WHERE student_id=" + temp.getID()).size() != 0) {
+						JOptionPane.showMessageDialog(parent, "Student with id: " + temp.getID() + " already exists in database.");
+					}else {
+						dbm.createStudent(temp);
+					}
+					
 					studentListPanel.updateTable();
 				} catch (Exception e1) {
 					System.out.println("ERROR CREATING STUDENT in HomePanel");
