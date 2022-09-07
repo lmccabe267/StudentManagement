@@ -23,6 +23,7 @@ public class StudentInfoPanel extends JPanel{
 	JTextField firstName, lastName, id, grade;
 	JButton edit, delete;
 	Boolean editing = false;
+	Student selected;
 	
 	public StudentInfoPanel(DBManager dbm) {
 		this.dbm = dbm;
@@ -41,6 +42,14 @@ public class StudentInfoPanel extends JPanel{
 					grade.setEditable(false);
 					editing = false;
 					edit.setText("Edit");
+					try {
+						Integer.parseInt(id.getText());
+						updateStudent();
+					}catch(Exception ex) {
+						JOptionPane.showMessageDialog(studentListPanel, "ID: " + id.getText() + " is not a valid ID");
+					}
+					updateSelected(selected);
+					studentListPanel.updateTable();
 				}else {					
 					firstName.setEditable(true);
 					lastName.setEditable(true);
@@ -52,6 +61,7 @@ public class StudentInfoPanel extends JPanel{
 				
 			}
 		});
+		
 		delete = new JButton("Delete");
 		
 		setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -103,6 +113,7 @@ public class StudentInfoPanel extends JPanel{
 	
 	public int updateSelected(Student student) {
 		try {
+			selected = student;
 			id.setText(student.getID() + "");
 			firstName.setText(student.getFirstName());
 			lastName.setText(student.getLastName());
@@ -131,7 +142,26 @@ public class StudentInfoPanel extends JPanel{
 		this.studentListPanel = slp;
 	}
 	
-	private void updateStudent(Student student) {
+	private void updateStudent() {
+		Student current = new Student(Integer.parseInt(id.getText()), firstName.getText(), lastName.getText(), Integer.parseInt(grade.getText()));
+		try {
+			
+			if(selected.getID() != current.getID()) {
+				if(dbm.checkIdAvailability(current)){
+					dbm.updateStudent(selected, current);
+					JOptionPane.showMessageDialog(studentListPanel, "Entry Updated");
+				}else {
+					JOptionPane.showMessageDialog(studentListPanel, "Student with id: " + current.getID() + " already exists in database.");
+					updateSelected(selected);
+				}
+			}else {
+				dbm.updateStudent(selected, current);
+				JOptionPane.showMessageDialog(studentListPanel, "Entry Updated");
+			}
+		}catch(Exception e) {
+			System.out.println("Error updating student");
+		}
+		
 		
 	}
 	

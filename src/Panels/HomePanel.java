@@ -38,10 +38,10 @@ public class HomePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Student temp = CreateStudentDialog.showDialog(parent);
-					if(dbm.queryStudent("SELECT * from students WHERE student_id=" + temp.getID()).size() != 0) {
-						JOptionPane.showMessageDialog(parent, "Student with id: " + temp.getID() + " already exists in database.");
-					}else {
+					if(dbm.checkIdAvailability(temp)) {
 						dbm.createStudent(temp);
+					}else {
+						JOptionPane.showMessageDialog(parent, "Student with id: " + temp.getID() + " already exists in database.");
 					}
 					
 					studentListPanel.updateTable();

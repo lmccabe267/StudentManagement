@@ -77,6 +77,7 @@ public class StudentListPanel extends JPanel{
 				return false;
 			};
 		};
+		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent event) {
