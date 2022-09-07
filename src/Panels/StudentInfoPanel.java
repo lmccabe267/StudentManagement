@@ -19,23 +19,46 @@ public class StudentInfoPanel extends JPanel{
 	
 	DBManager dbm;
 	StudentListPanel studentListPanel;
-	JLabel firstNameLabel, lastNameLabel, idLabel;
-	JTextField firstName, lastName, id;
+	JLabel firstNameLabel, lastNameLabel, idLabel, gradeLabel;
+	JTextField firstName, lastName, id, grade;
 	JButton edit, delete;
+	Boolean editing = false;
 	
 	public StudentInfoPanel(DBManager dbm) {
 		this.dbm = dbm;
 		
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		setLayout(new GridLayout(4,2));
+		setLayout(new GridLayout(3,4));
 		
 		edit = new JButton("Edit");
+		edit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(editing) {
+					firstName.setEditable(false);
+					lastName.setEditable(false);
+					id.setEditable(false);
+					grade.setEditable(false);
+					editing = false;
+					edit.setText("Edit");
+				}else {					
+					firstName.setEditable(true);
+					lastName.setEditable(true);
+					id.setEditable(true);
+					grade.setEditable(true);
+					editing = true;
+					edit.setText("Done");
+				}
+				
+			}
+		});
 		delete = new JButton("Delete");
 		
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		firstNameLabel = new JLabel("First Name:");
 		lastNameLabel = new JLabel("Last Name:");
 		idLabel = new JLabel("ID:");
+		gradeLabel = new JLabel("Grade:");
 		
 		firstName = new JTextField(35);
 		firstName.setEditable(false);
@@ -43,6 +66,8 @@ public class StudentInfoPanel extends JPanel{
 		lastName.setEditable(false);
 		id = new JTextField(35);
 		id.setEditable(false);
+		grade = new JTextField(35);
+		grade.setEditable(false);
 		
 		delete.addActionListener(new ActionListener() {
 
@@ -67,6 +92,9 @@ public class StudentInfoPanel extends JPanel{
 		add(lastNameLabel);
 		add(lastName);
 		
+		add(gradeLabel);
+		add(grade);
+		
 		add(edit);
 		add(delete);
 		
@@ -78,6 +106,7 @@ public class StudentInfoPanel extends JPanel{
 			id.setText(student.getID() + "");
 			firstName.setText(student.getFirstName());
 			lastName.setText(student.getLastName());
+			grade.setText(student.getGrade() + "");
 			System.out.println(student);
 			return 1;
 		}catch(Exception e) {
@@ -100,6 +129,10 @@ public class StudentInfoPanel extends JPanel{
 	
 	public void add(StudentListPanel slp) {
 		this.studentListPanel = slp;
+	}
+	
+	private void updateStudent(Student student) {
+		
 	}
 	
 }
