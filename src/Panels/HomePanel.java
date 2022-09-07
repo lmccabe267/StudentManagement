@@ -7,10 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Managers.DBManager;
 import Panels.Dialogs.CreateStudentDialog;
+import People.Student;
 
 @SuppressWarnings("serial")
 public class HomePanel extends JPanel {
@@ -35,7 +37,13 @@ public class HomePanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					dbm.createStudent(CreateStudentDialog.showDialog(parent));
+					Student temp = CreateStudentDialog.showDialog(parent);
+					if(dbm.checkIdAvailability(temp)) {
+						dbm.createStudent(temp);
+					}else {
+						JOptionPane.showMessageDialog(parent, "Student with id: " + temp.getID() + " already exists in database.");
+					}
+					
 					studentListPanel.updateTable();
 				} catch (Exception e1) {
 					System.out.println("ERROR CREATING STUDENT in HomePanel");
@@ -44,6 +52,19 @@ public class HomePanel extends JPanel {
 			
 		});
 		JMenuItem delete = new JMenuItem("delete");
+
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int confirm = JOptionPane.showConfirmDialog(studentListPanel, "Delete selected student?", "Are you sure?",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if(confirm == JOptionPane.YES_OPTION) {					
+					infoPanel.deleteSelected(studentListPanel.getSelected());
+				}
+			}
+		});
+		
 		JMenuItem logout = new JMenuItem("logout");
 		
 		StudentInfoPanel infoPane = infoPanel;
@@ -54,7 +75,8 @@ public class HomePanel extends JPanel {
 		menuBar.add(file);
 
 		
-
+		infoPanel.add(studentListPanel);
+		
 		add(menuBar, BorderLayout.NORTH);
 		add(studentListPanel, BorderLayout.CENTER);
 		add(infoPane, BorderLayout.SOUTH);

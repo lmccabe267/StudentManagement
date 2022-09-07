@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import People.Student;
 
 /*
@@ -141,4 +143,46 @@ public class DBManager {
 		}
 		return -1;
 	}
+	
+	/*
+	 * Deletes the from the database corresponding to the student object passed in
+	 * @param Student student the student to be deleted
+	 * @returns the amount of lines changed in the database, -1 if failed
+	 */
+	public int deleteStudent(Student student) {
+		try {
+			return update("DELETE FROM students WHERE student_id=" + student.getID());
+		} catch (Exception e) {
+			System.out.println("Error deleting student");
+		}
+		
+		return -1;
+	}
+	
+	/*
+	 * Updates old entry to new updated entry
+	 * @param Student old student entry to be changed
+	 * @param Student current udpated student entry
+	 * @returns the amount of lines changed in the database, -1 if failed
+	 */
+	public int updateStudent(Student old, Student current) {
+		try {
+			return update("UPDATE students SET student_firstName='" + current.getFirstName() + "', student_lastName='" + current.getLastName() + "', student_id=" + current.getID() +", student_grade=" + current.getGrade() + " WHERE student_id=" + old.getID() + ";");
+		}catch(Exception e) {
+			System.out.println("Error updating student");
+		}
+		return -1;
+	}
+	
+	/*
+	 * checks if students id is already in database
+	 * @param Student student to be checked
+	 * @retuns whether or not the entry is in the database
+	 */
+	public boolean checkIdAvailability(Student student) throws Exception {
+		if(queryStudent("SELECT * from students WHERE student_id=" + student.getID()).size() != 0) {
+			return false;
+		}return true;
+	}
+	
 }

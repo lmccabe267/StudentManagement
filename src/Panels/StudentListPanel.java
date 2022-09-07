@@ -77,18 +77,18 @@ public class StudentListPanel extends JPanel{
 				return false;
 			};
 		};
+		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent event) {
-		        if (table.getSelectedRow() > -1) {
-		            // print first column value from selected row
-		           // System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-		            try {
+		    	
+		    	if(event.getValueIsAdjusting()) {
+		    		try {
 						infoPanel.updateSelected(dbm.queryStudent("SELECT * FROM students WHERE student_id=" + table.getValueAt(table.getSelectedRow(), 0) + ";").get(0));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-		        }
+		    	}
 		    }
 		});
 		return table;
@@ -112,6 +112,14 @@ public class StudentListPanel extends JPanel{
 		studentTable.setShowVerticalLines(true);
 	}
 	
-	
+	public Student getSelected() {
+		try {
+			return dbm.queryStudent("SELECT * FROM students WHERE student_id="+studentTable.getValueAt(studentTable.getSelectedRow(), 0)).get(0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }
